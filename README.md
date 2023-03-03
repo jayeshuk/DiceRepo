@@ -25,13 +25,14 @@ Tech Stack:
   5. OctoKit
   
 ## Application Video
+[DiceRepo App.webm](https://user-images.githubusercontent.com/46965764/222789795-b4cdfaf9-8a51-4fcc-93d4-d03b9739a830.webm)
 
 
 ## Setup and Installation
 
 Clone down this repository. You will need `node` and `npm` installed globally on your machine.  
 
-1. Installation:
+1. Installation (In project root folder):
 
     `npm install`    
 
@@ -49,7 +50,7 @@ Clone down this repository. You will need `node` and `npm` installed globally on
 3. To Start Android Application:
 
     * For Android users:
-      `npx react-native run-android`
+      `npx react-native start` and then press a or i for respective OS
 
     * For iOS users:
       `npx react-native run-ios`
