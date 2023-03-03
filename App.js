@@ -8,23 +8,35 @@ import {
   View,
   ActivityIndicator,
   TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import SortModal from './src/components/Modal';
 import RepoCard from './src/components/RepoCard';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 const {Octokit} = require('@octokit/rest');
 
-const App = () => {
+const YourApp = () => {
   const [query, onChangeQuery] = useState('');
   const [repos, setRepos] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [sortDir, setSortDir] = useState(false);
   const [selectedSort, setSelectedSort] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   const octokit = new Octokit({
-    auth: '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',
+    auth: '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',
   });
+
+  // const octokit = new Octokit({
+  //   baseUrl: 'https://api.github.com',
+  // });
+
+  // octokit.authenticate({
+  //   type: 'basic',
+  //   username: 'jayeshukalkar@gmail.com',
+  //   password: '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',
+  // });
 
   const FetchRepos = async () => {
     setLoading(true);
@@ -41,10 +53,15 @@ const App = () => {
         console.log(res.data.items);
         setRepos([...res.data.items]);
       })
-      .catch(err => console.log('Error', err.message));
+      .catch(err => {
+        setLoading(false);
+        console.log('Error', err);
+        setErrorMessage(JSON.stringify(err));
+      });
   };
 
   const onSearchPress = () => {
+    Keyboard.dismiss();
     console.log('Search Pressed');
     FetchRepos();
   };
@@ -160,7 +177,11 @@ const App = () => {
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator size="large" color="#4871f7" />
         </View>
-      ) : null}
+      ) : (
+        <Text style={{color: 'red'}}>
+          {errorMessage ? `Error: ${errorMessage}` : null}
+        </Text>
+      )}
 
       {/* Repository Card List */}
       <View style={{flex: 1}}>
